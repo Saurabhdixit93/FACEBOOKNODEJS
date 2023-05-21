@@ -35,7 +35,6 @@ passport.use(new LocalStrategy(
                 const registrationTime = userExists.createdAt.getTime();
 
                 if( now - registrationTime > EXPIRATION_TIME) {
-                    deleteUnverifiedUser(userExists._id);
                     request.flash('error' ,'Email Verification time Expired ,Please Register Again');
                     return done(null , false);
                 }else{
