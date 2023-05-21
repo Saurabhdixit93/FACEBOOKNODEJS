@@ -81,7 +81,7 @@ module.exports.handleResetPasswordLink = async (req, res) => {
         const password_Reset = await PasswordReset.findOne({ token });
         if(password_Reset){
           req.flash('success' ,'link Verified , Update Your Password Now');
-          return  res.render('resetpassword', {
+          return  res.render('resetPassword', {
             title:'Forgot Password Final Page',
             token:password_Reset.token,
             message: { type: 'success', text: 'link Verified , Update Your Password Now.' }
