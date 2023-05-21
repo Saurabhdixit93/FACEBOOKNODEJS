@@ -101,15 +101,7 @@ passport.setAuthenticatedUser =  (request , response , next) =>{
     next();
 };
 
-const deleteUnverifiedUser = async (userId) => {
-        try{
-                await User.deleteOne({ _id: userId});
 
-                    }catch(error){
-                            console.error('Error In Unverified' ,error);
-                                }
-                                }
                                 
-}
 
 module.exports = passport;
