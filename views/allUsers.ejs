@@ -1,0 +1,38 @@
+
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+<link rel="stylesheet" href="/css_files/allusersandfriends.css">
+
+<!-- All Users Section -->
+<dic class="head" style="display: flex; text-align: center;justify-content: center;">
+    <h2>All Users</h2>
+</dic>
+<section class="all-users" style="margin-top: 0px;">
+    <% for(user of all_users) {%>
+    <div class="container">
+        <div class="row">
+        <div class="col-md-4">
+            <div class="user-card">
+                <a style="text-decoration: none; padding: 20px;" href="/user/profile/<%= user._id %>"><%= user.name %></a>
+            </div>
+        </div>
+        <%}%>
+    </div>
+</section>
+   
+   <!-- all friends -->
+<section class="friends">
+    <div class="container">
+        <% if (!locals.user){ %>
+            <h5>Please Login to See Your Friends</h5>
+        <%}%>
+        <% if(locals.user && locals.friends.length==0){%>
+            <h5>No Friends Found !</h5>
+        <%}%>
+        <h2 style="margin-bottom: 0;">All Friends</h2>
+        <% for(fr of locals.friends){%>
+           <%- include('_friends'); %>
+        <%}%>  
+    </div>
+</section>
+ 

@@ -1,0 +1,63 @@
+<title><%= title %></title>
+<link rel="stylesheet" href="/css_files/messanger.css">
+
+<section class="mobileSection">
+
+    <header class="haderSection">
+     <div class="imageAndText">
+      <div class="imagesDiv">
+      <% if(user){%>
+       <a href="/user/profile/<%=user._id%>" id="clickgo" style="display: none;"></a>
+       <a class="profileLink"  onclick="document.getElementById('clickgo').click()">
+        <img class="profileImages" src="<%= user.profile_picture%>">
+       </a>
+     
+       <h1 class="nameText">
+        <a  href="/user/profile/<%=user._id%>" style="display: none;" id="onclickfor"></a>
+        <a id="profileNameShow" onclick="document.getElementById('onclickfor').click()" class="profileLink"><%= user.name%></a>
+       </h1>
+      <%}%>
+      </div>
+     </div>
+     <div class="collIcon">
+      <ul>
+       <li><i class="fa-solid fa-phone"></i></li>
+       <li><i class="fa-solid fa-video"></i></li>
+      </ul>
+     </div>
+    </header>
+ 
+ 
+    <section class="mainContent">
+     <div class="meText">
+ 
+      <!-- here message goes -->
+      <h3>Not Available Now</h3>
+
+      
+     </div>
+    </section>
+ 
+ 
+   <footer class="footerSection">
+     <div class="iconSite">
+      <ul>
+       <li><i class="fa-solid fa-circle-plus"></i></li>
+       <li><i class="fa-solid fa-camera"></i></li>
+       <li><i class="fa-solid fa-image"></i></li>
+       <li><i class="fa-solid fa-microphone"></i></li>
+      </ul>
+     </div>
+     <div class="inputText">
+      <div class="inputTextDiv">
+       <input id="inputPostText" type="text" placeholder="Aa">
+       <i class="fa-solid fa-face-smile"></i>
+      </div>
+      <i id="likePost" class="fa-solid fa-thumbs-up likeBtn"></i>
+      <i id="textSubmit" class="fa-solid fa-circle-chevron-right likeBtn disNone"></i>
+     </div>
+</footer>
+
+<script src="/script_files/chat.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.6.1/socket.io.min.js  "></script>
+  

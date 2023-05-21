@@ -1,0 +1,62 @@
+<link rel="stylesheet" href="/css_files/homepage.css">
+<script src="https://kit.fontawesome.com/3b91611922.js" crossorigin="anonymous"></script>
+
+<!-- header starts -->
+<div class="header">
+    <div class="header__left">
+      <a href="/">
+        <img
+        src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/51/Facebook_f_logo_%282019%29.svg/1200px-Facebook_f_logo_%282019%29.svg.png"
+        alt=""
+      />
+      </a>
+      <% if(!locals.user){%>
+        <div class="header__option"onclick="document.getElementById('sign-in').click()" >
+           <a href="/user/sign-in" style="display: none;" id="sign-in" >
+          </a>
+          <span class="material-icons">login</span>
+          <h4>Login</h4>
+        </div>
+      <%}%>
+      <% if(locals.user){%>
+        <div class="header__left" style="margin-left: 20px;cursor: pointer;"  onclick="document.getElementById('link-profile').click()"  >
+            <div style="display: none;">
+              <a href="/user/profile/<%=user.id%>" id="link-profile"></a>
+            </div>
+          <img
+            src="<%= user.profile_picture %>" class="imageprofileheader" alt="profile picture"
+          />
+          <div class="header__input">
+            <h4><%= user.name %></h4>
+          </div>
+        </div>
+
+      <%}%>
+      <% if(locals.user){%>
+        <div class="header__option"onclick="document.getElementById('sign-out').click()" >
+           <a href="/user/sign-out" style="display: none;" id="sign-out" >
+          </a>
+          <span class="material-icons">logout</span>
+          <h4>Logout</h4>
+        </div>
+      <%}%>
+    </div>
+
+    <div class="header__middle">
+      <div class="header__option active"onclick="document.getElementById('home').click()"  >
+        <a href="/" style="display: none;" id="home"></a>
+        <span class="material-icons"> home </span>
+      </div>
+      <div class="header__option">
+        <span class="material-icons"> flag </span>
+      </div>
+      <div class="header__option">
+        <span class="material-icons"> subscriptions </span>
+      </div>
+      
+      <div class="header__option">
+        <span class="material-icons"> storefront </span>
+      </div>
+    </div>
+  </div>
+  <!-- header ends -->

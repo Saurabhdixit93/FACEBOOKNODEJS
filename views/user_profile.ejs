@@ -1,0 +1,160 @@
+<title><%= title %> </title>
+<link rel="stylesheet" href="/css_files/userprofile.css">
+<div class="links" style="margin-top: 20px; margin-bottom: 20px;">
+  <div class="other-links">
+    <ul class="users-important-links">
+      <li>
+        <a href="/">
+          <i class="fa fa-home fa-xl"></i>
+        </a>
+      </li>
+      <li>
+        <a href="/user/profile-edit/<%=user.id%>">
+          <i class="fa-solid fa-user-pen fa-xl"></i>
+        </a>
+      </li>
+      <li>
+        <a href="/user/messanger">
+          <i class="fa-brands fa-facebook-messenger fa-xl"></i>
+        </a>
+      </li>
+      <li>
+        <a href="/allfriends-and-users">
+          <i class="fa-solid fa-user-group fa-xl"></i>
+        </a>
+      </li>
+    </ul>
+    <!-- start -->
+    <!-- for add remove friend if it is or not -->
+    <%if (user.id != profile_user.id){%>
+      <% if(!locals.is_friends){%>
+      <div class="friendships">
+        <div class="add_friend">
+          <a style="text-decoration: none !important;" href="/user/profile/<%= profile_user._id %>/add-friend?id=<%= profile_user.id%>""> <i class="fa-solid fa-user-plus"></i> Add Friend</a>
+        </div>
+      <%}else{%>
+        <div class="add_friend" style="margin-top: 10px;">
+          <a class="add_friend" style="text-decoration: none !important;" href="/user/profile/<%= profile_user._id %>/add-friend?id=<%= profile_user.id%>""><i class="fa-solid fa-user-minus"></i> Remove Friend</a>
+        </div>
+      </div>
+    <%}%> 
+    <%}%> 
+    <!-- end -->
+  </div>
+</div>
+
+<div class="container">
+  <div class="profile">
+    <!-- if user -->
+    <% if (user.id == profile_user.id){%>
+    <div class="profile-header">
+      <div class="cover-image">
+        <img src="<%= user.profile_picture %>" alt="Cover Image">
+      </div>
+      <div class="profile-image">
+        <img src="<%= user.profile_picture %>" alt="Profile Image">
+      </div>
+      <div class="profile-info">
+        <h1 class="name"><%= profile_user.name %></h1>
+        <p class="location"><%= profile_user.email %></p>
+      </div>
+     
+    </div>
+    <%}else{%>
+    <!-- if not matched -->
+    <div class="profile-header">
+      <div class="cover-image">
+        <img src="<%= profile_user.profile_picture %>" alt="Cover Image">
+      </div>
+      <div class="profile-image">
+        <img src="<%= profile_user.profile_picture %>" alt="Profile Image">
+      </div>
+      <div class="profile-info">
+        <h1 class="name"><%= profile_user.name %></h1>
+        <p class="location"><%= profile_user.email %></p>
+     </div>
+    </div>
+    <%}%>
+    <!-- own posts -->
+    <!-- post starts -->
+    <% for(post of posts){%>
+      <% if (user.id == profile_user.id && user.id == post.user.id){%>
+      <div class="post">
+        <div id="post-<%= post._id %>">
+        <div class="post__top" style="gap: 10px;">
+          <img
+            class="user__avatar post__avatar"
+            src="<%=post.user.profile_picture %>"  alt=""
+          />
+          <div class="post__topInfo">
+            <h3><%= post.user.name %> </h3>
+            <p> <span><%= post.createdAt.toLocaleTimeString([],{month:'short',day:'numeric',hour:'2-digit',minute:'2-digit',hourCycle:'h12' }) %>
+            </span> </p>
+          </div>
+          <div class="end" >
+            <% if(locals.user) { %>
+              <!-- Delete post -->
+              <% if (locals.user.id == post.user.id && user.id== profile_user.id){ %>
+                <span>
+                  <a class="postss" style="text-decoration: none;" href="/user/delete-post-comment/<%= post.id %> ">
+                    <i class="fa-solid fa-delete-left"></i>
+                  Delete</a>
+                </span>
+              <% } %>
+            <%}%>
+          </div>
+        </div>
+        <div class="post__bottom">
+          <p><%= post.content %></p>
+        </div>
+        <!-- // check only if image uploded then it will show -->
+        <% if(post.imageUrl){%>
+        <div class="post__image">
+          <img
+            src="<%= post.imageUrl %>"  alt=""
+          />
+        </div>
+        <%}%>
+        <div class="post__options">
+           <!-- here click works -->
+           <% if(locals.user) {%>
+            <div class="post__option" onclick="document.getElementById('<%= post._id  %>').click()" >
+                <!-- hide and use the option  -->
+                  <div style="display: none;">
+                    <% if(locals.user) {%>
+                      <a href="/likes/toggle/?id=<%= post._id %>&type=post" class="like-button"  id="<%= post._id  %>" data-id="<%= post._id %>" data-type="post">
+                        <i class="fa-solid fa-thumbs-up"></i>
+                        <span class="like-count" style="margin-left: 10px;"><%= post.likes.length %></span>
+                      </a>
+                    <% } else{ %>
+                      <i class="fa-regular fa-thumbs-up"></i>
+                      <span style="margin-left: 10px;"><%= post.likes.length %></span>
+                    <% } %>
+                  </div> 
+              <span class="material-icons" style="color: blue;"> thumb_up </span>
+              <p style="font-weight: bold;"> <%= post.likes.length %></p>
+            </div>
+            <%}%>
+            <% if(!locals.user) {%>
+            <div class="post__option" >
+              <span class="material-icons" > thumb_up </span>
+              <p style="font-weight: bold;"><%= post.likes.length %></p>
+            </div>
+            <%}%>
+          <!-- comments form -->
+          <div class="post__option">
+            <form action="/user/created"  method="post" class="post__option">
+              <input type="text" name="content" required placeholder="Comment" class="Comments-input">
+              <input type="hidden" name="post_id" value="<%= post._id %>">
+              <button type="submit" class="comments-button"><i class="fa-solid fa-comment"></i></button>
+            </form>
+          </div>
+        </div>
+        <!-- comments form end -->
+    </div>
+  </div>
+  </div>
+  <%}%>
+  <%}%>
+</div>
+

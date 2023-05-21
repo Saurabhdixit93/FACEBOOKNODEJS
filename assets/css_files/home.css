@@ -1,0 +1,108 @@
+.containerr {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+  }
+ 
+  .form-containerr {
+    border: 1px solid #ccc;
+    padding: 20px;
+    max-width: 400px;
+    width: 100%;
+    background-color: rgb(37, 0, 76);
+    box-shadow: 2px 1px 3px 0 white ;
+  }
+  .formm {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  form input[type="text"],
+  form input[type="email"],
+  form input[type="password"],
+  form button {
+    margin: 10px 0;
+    padding: 10px;
+    width: 100%;
+    font-size: 20px;
+    border: none;
+    border-radius: 3px;
+    color: black;
+    background-color: #ccc;
+  }
+  #button {
+    background-color: #1877f2;
+    color: #fff;
+    cursor: pointer;
+  }
+  #button:hover {
+    background-color: #006eff;
+  }
+  form a {
+    color: #1877f2;
+    text-decoration: none;
+  }
+  form a:hover {
+    text-decoration: underline;
+    cursor: pointer;
+  }
+  .hide-password {
+    -webkit-text-security: disc;
+    -moz-text-security: disc;
+  }
+  
+  .forgot-password-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 4px 6px;
+    color: #000000;
+    border-radius: 50px;
+    text-decoration: none;
+    font-size: 14px;
+    transition: all 0.3s ease-in-out;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.15);
+  }
+  
+  .forgot-password-button:hover {
+    text-decoration: none;
+    color: black;
+    box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.2);
+  }
+  
+  .forgot-password-button i {
+    margin-right: 6px;
+    font-size: 12px;
+  }
+ 
+
+  .github-button{
+    display: inline-block;
+    background-color: #0158d3;
+    color: white;
+    text-decoration: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    margin-bottom: 10px;
+  }
+#password-toggle{
+  cursor: pointer;
+  margin-right: 60%;
+}
+  .github-button:hover{
+    background-color: #006aff;
+    text-decoration: none;
+  }
+  hr{
+    margin-bottom: 20px;
+    margin-top: 10px;
+  }
+
+  @media  screen and (max-width: 700px){
+    .containerr {
+        margin-top: 2rem;
+    }
+  }

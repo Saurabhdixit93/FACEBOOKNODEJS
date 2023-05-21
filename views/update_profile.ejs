@@ -1,0 +1,43 @@
+<link rel="stylesheet" href="/css_files/Profile.css">
+<title><%= title %></title>
+<section style="margin-top: -2rem;"> 
+    <div class="profile-container">
+        <% if ( user.id == profile_user.id) { %>
+        <form action="/user/update-user-profile/<%= profile_user.id%>" class="update_profile" method="POST" enctype="multipart/form-data">
+            <h3>Update Profile details</h3>
+            <div class="form-group">
+            <label>Change Name</label>
+            <input type="text" class="form-control" name="name" placeholder="Update-Your-Name.." value="<%= profile_user.name %> " required/>
+            </div>
+            <div class="form-group">
+            <label>Change Email</label>
+            <input type="email" class="form-control" name="email" placeholder="Update-Your-Email.." value="<%= profile_user.email %>" required />
+            </div>
+            <div class="form-group">
+            <label>Change Password</label>
+            <input type="password" class="form-control" id="password" name="password" placeholder="Update-Your-Password" value="<%= profile_user.password %>" required />
+            </div>
+            <span id="password-toggle" style="cursor: pointer;"><i class="fa fa-eye"></i> Show Password </span>
+            <div class="form-group">
+            <label for="profile_picture">Upload Profile Picture</label>
+            <div class="input-group">
+                <input type="file" class="form-control" name="profile_picture" id="profile_picture" accept="image/*">
+                <img id="preview" src="" alt="Preview" style="width: 230px; max-height: 100px; display: none; border: none;margin-top: 5px;">
+                <button id="remove_preview" type="button" class="btn btn-danger" style="display: none; margin-top: 2px;"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            </div>
+            <div class="form-group">
+            <input type="submit" value="Update"/>
+            </div>
+        </form>
+    <%} else{%>
+        <div>
+            <H4>LogIn To Update Profile !</H4>
+        </div>
+    <%}%>
+    </div>
+</section>
+<script src="/script_files/preview.js"></script>
+
+
+

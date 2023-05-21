@@ -1,0 +1,93 @@
+<title> <% title %> </title>
+<link rel="stylesheet" href="/css_files/home.css">
+<style>
+.invalid-feedback {
+  color: #ff0019;
+  font-size: 0.875rem;
+  display: none;
+}
+
+input:invalid + .invalid-feedback {
+  display: block;
+  margin-top: 0.25rem;
+}
+#login-google {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.75rem 1.5rem;
+  border: 2px solid #DCDCDC;
+  border-radius: 5px;
+  background-color: #FFF;
+  color: #666666;
+  font-size: 1.125rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+}
+
+#login-google:hover {
+  border-color: #4285F4;
+  background-color: #4285F4;
+  color: #FFF;
+}
+
+#login-google:hover img {
+  filter: invert(100%);
+}
+
+#login-google .icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 0.5rem;
+}
+</style>
+<div class="containerr">
+    <div class="form-containerr">
+        <% if (message) { %>
+            <div id="alert-message" class="alert alert-<%= message.type %>">
+              <%= message.text %>
+            </div>
+        <% } %>
+        <form id="signup-form" method="post" action="/user/create-user" class="needs-validation formm" novalidate>
+            <h2>Sign Up</h2>
+            <hr style="background-color: white; width: 100%;">
+            <input type="text" id="name" name="name" placeholder="Name..." required>
+            <div class="invalid-feedback">
+              Please enter a valid Name.
+            </div>
+            <input type="email"  id="email" name="email" placeholder="Email..." required>
+            <div class="invalid-feedback">
+              Please enter a Email Address.
+            </div>
+            <input type="password" id="password" name="password" placeholder="Password..." required>
+            <div class="invalid-feedback">
+              Please enter a valid Password.
+            </div>
+            <input type="password" id="confirm-password" name="confirmPassword" placeholder="Confirm Password..." required>
+            <div class="invalid-feedback">
+              Please enter Confirm Password Same As Password.
+            </div>
+            <span id="password-toggle" style="margin-top: 10px;"><i class="fa fa-eye"></i> Show Password </span>
+            <button type="submit" id="button">Sign Up</button>Or
+            <hr style="background-color: blue !important; width: 100%;">
+            <a href="/user/auth/google-login" style="display: none;" id="google_login"></a>
+            <button type="button" id="login-google" onclick="document.getElementById('google_login').click()" >
+              <span class="icon">
+                <img src="https://img.icons8.com/color/50/null/google-logo.png" alt="Google Logo" style="width: 25px; height: 25px; margin-right: 10px;">
+              </span>
+              <span>Sign in with Google</span>
+            </button>
+            <p>Already have an account? <a href="/user/sign-in" id="signin-link">Sign In</a></p>
+        </form>
+    </div>
+</div>
+<script src="/script_files/home.js"></script>
+<script src="/script_files/validation.js"></script>
+<script>
+    // Hide alert message after 5 seconds
+    setTimeout(function() {
+      document.getElementById('alert-message').style.display = 'none';
+    }, 5000);
+  </script>

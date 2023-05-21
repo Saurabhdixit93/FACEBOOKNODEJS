@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+ <html>
+ <head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Email Verification Template</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.9.3/css/bulma.min.css">
+ </head>
+ <body>
+  <section class="hero is-light is-fullheight-with-navbar">
+   <div class="hero-body">
+    <div class="container">
+     <div class="columns is-centered">
+      <div class="column is-half-tablet is-one-third-desktop">
+       <div class="box">
+        <p class="subtitle is-6">Hello, <strong><%= user.name %></strong>,</p>
+        <p class="subtitle is-5">Thank you for signing up for our service. To get started, please verify your email address by clicking the button below:</p>
+        <a href="<%= verificationLink %>" class="button is-primary is-fullwidth"><strong>Verify Email Address</strong></a>
+        <p>This Link will Expire In : <strong style="color: red;"> 10 mins</strong> </p>
+        <p class="subtitle is-5">If you have any questions or concerns, please don't hesitate to contact us at <a href="mailto:smartds2550@gmail.com">smartds2550@gmail.com</a>.</p>
+       </div>
+       <footer class="footer">
+        <div class="content has-text-centered">
+         <p>
+          This email was sent by <strong>Email Verify.</strong> on behalf of <strong>Saurabh Dixit</strong>. If you did not sign up for our service or wish to unsubscribe, please contact us immediately at <a href="mailto:smartds2550@gmail.com">smartds2550@gmail.com</a>.
+         </p>
+        </div>
+       </footer>
+      </div>
+     </div>
+    </div>
+   </div>
+  </section>
+ </body>
+ </html>

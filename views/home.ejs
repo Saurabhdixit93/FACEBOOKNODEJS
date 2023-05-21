@@ -1,0 +1,256 @@
+<link rel="stylesheet" href="/css_files/homepage.css">
+
+<!-- main body starts -->
+<div class="main__body">
+  <!-- sidebar starts -->
+  <div class="sidebar" style="border-right: 1px lightgray solid;">
+    <% if(locals.user){%>
+    <div class="sidebarRow" onclick="document.getElementById('user-own').click()" >
+      <img
+        class="user__avatar"
+        src="<%= user.profile_picture %>"  alt="user-profile"
+      />
+      <a href="/user/profile/<%=user.id%>" id="user-own" style="display: none;"></a>
+      <h4><%= user.name %></h4>
+    </div>
+    <%}%>
+
+    <div class="sidebarRow">
+      <span class="material-icons"> local_hospital </span>
+      <h4>Covid - 19 Information Center</h4>
+    </div>
+
+    <div class="sidebarRow">
+      <span class="material-icons"> emoji_flags </span>
+      <h4>Pages</h4>
+    </div>
+    <% if(locals.user){%>
+    <div class="sidebarRow" onclick="document.getElementById('allfriends-and-users').click()" >
+      <a style="display: none;" id="allfriends-and-users" href="/allfriends-and-users" class="ongoing_links"> People </a>
+      <span class="material-icons" > people </span>
+      <h4>People</h4>
+    </div>
+    <div class="sidebarRow" onclick="document.getElementById('messanger').click()" >
+      <a style="display: none;" id="messanger" href="/user/messanger" class="ongoing_links"> Messenger </a> 
+      <span class="material-icons">chat</span>
+      <h4>Messenger</h4>
+    </div>
+    <%}%>
+
+    <div class="sidebarRow">
+      <span class="material-icons"> storefront </span>
+      <h4>Marketplace</h4>
+    </div>
+
+    <div class="sidebarRow">
+      <span class="material-icons"> video_library </span>
+      <h4>Videos</h4>
+    </div>
+
+    <div class="sidebarRow">
+      <span class="material-icons"> expand_more </span>
+      <h4>More</h4>
+    </div>
+  </div>
+  <!-- sidebar ends -->
+  
+  <!-- feed starts -->
+  
+  <div class="feed" >
+    <% if(locals.user){%>
+    <!-- message sender starts -->
+   
+    <div class="messageSender">
+      <div class="messageSender__top">
+        <img
+          class="user__avatar"
+          src="<%= user.profile_picture %>" alt=""
+        />
+        <form action="/user/create-post" method="post" style="display:grid ;" enctype="multipart/form-data" class="postfile">
+          <input class="messageSender__input" name="content" placeholder="What's on your mind?" type="text" required />
+          <input type="file" name="imageUrl" id="fileInput" style="display: none;">
+          <label for="imageUrl" id="fileLabel"></label>
+          <p id="fileName"></p>
+          <div style="margin-top: 15px;display: grid;"><button type="submit" style="cursor: pointer;border: none;" class="postss">Post</button></div>
+        </form>
+        
+      </div>
+
+      <div class="messageSender__bottom">
+        <div class="messageSender__option">
+          <span style="color: red" class="material-icons"> videocam </span>
+          <h3>Live</h3>
+        </div>
+
+        <div class="messageSender__option" onclick="document.getElementById('fileInput').click()">
+          <span style="color: green" class="material-icons"> photo_library</span>
+           <h3>Photo</h3>
+        </div>
+
+        <div class="messageSender__option">
+          <span style="color: orange" class="material-icons"> insert_emoticon </span>
+          <h3>Feeling</h3>
+        </div>
+      </div>
+    </div>
+    <!-- message sender ends -->
+    <%} else{%>
+      <div style="display: flex; justify-content: center; margin-top: 5px;">
+        <h4>Please Login to Post Anything</h4>
+      </div>
+    <%}%>
+    <!-- post starts -->
+    <% for(post of posts){%>
+      <div class="post">
+        <div id="post-<%= post._id %>">
+        <div class="post__top" style="gap: 10px;">
+          <img
+            class="user__avatar post__avatar"
+            src="<%=post.user.profile_picture %>"  alt=""
+          />
+          <div class="post__topInfo">
+            <h3><%= post.user.name %> </h3>
+            <!-- <p> <span><%= post.createdAt.toLocaleTimeString([],{month:'short',day:'numeric',hour:'2-digit',minute:'2-digit',hourCycle:'h12' }) %>
+            </span> </p> -->
+            <p> <span><%= post.createdAt.toLocaleString('en-IN', { timeZone: 'Asia/Kolkata', day: 'numeric', month: 'short', year: 'numeric', hour: 'numeric', minute: 'numeric', hour12: true }) %>
+            </span> </p>
+          </div>
+          <div class="end" >
+            <% if(locals.user) { %>
+              <!-- Delete post -->
+              <% if (locals.user.id == post.user.id) { %>
+                <span>
+                  <a class="postss" style="text-decoration: none;" href="/user/delete-post-comment/<%= post.id %> ">
+                    <i class="fa-solid fa-delete-left"></i>
+                  Delete</a>
+                </span>
+              <% } %>
+            <%}%>
+          </div>
+        </div>
+        <div class="post__bottom">
+          <p><%= post.content %></p>
+        </div>
+        <!-- // check only if image uploded then it will show -->
+        <% if(post.imageUrl){%>
+        <div class="post__image">
+          <img
+            src="<%= post.imageUrl %>"  alt=""
+          />
+        </div>
+        <%}%>
+        <div class="post__options">
+           <!-- here click works -->
+           <% if(locals.user) {%>
+            <div class="post__option" onclick="document.getElementById('<%= post._id  %>').click()" >
+                <!-- hide and use the option  -->
+                  <div style="display: none;">
+                    <% if(locals.user) {%>
+                      <a href="/likes/toggle/?id=<%= post._id %>&type=post" class="like-button"  id="<%= post._id  %>" data-id="<%= post._id %>" data-type="post">
+                        <i class="fa-solid fa-thumbs-up"></i>
+                        <span class="like-count" style="margin-left: 10px;"><%= post.likes.length %></span>
+                      </a>
+                    <% } else{ %>
+                      <i class="fa-regular fa-thumbs-up"></i>
+                      <span style="margin-left: 10px;"><%= post.likes.length %></span>
+                    <% } %>
+                  </div> 
+              <span class="material-icons" style="color: blue;"> thumb_up </span>
+              <p style="font-weight: bold;"> <%= post.likes.length %></p>
+            </div>
+            <%}%>
+            <% if(!locals.user) {%>
+            <div class="post__option" >
+              <span class="material-icons" > thumb_up </span>
+              <p style="font-weight: bold;"><%= post.likes.length %></p>
+            </div>
+            <%}%>
+            <% if(locals.user) {%> 
+          <!-- comments form -->
+          <div class="post__option">
+            <form action="/user/created"  method="post" class="post__option">
+              <input type="text" name="content" required placeholder="Comment" class="Comments-input">
+              <input type="hidden" name="post_id" value="<%= post._id %>">
+              <button type="submit" class="comments-button"><i class="fa-solid fa-comment"></i></button>
+            </form>
+          </div>
+          <%}%>
+        </div>
+       
+        <!-- comments form end -->
+        <!-- comments container -->
+        <hr>
+        
+        <div style="display: flex; justify-content: center; margin-top: 5px;">
+          <h4>All Comments</h4>
+        </div>
+        
+      <% for(comment of post.comments){%>
+        
+        <div id="post-<%= post._id %>">
+          <hr style="background-color: lightgray;width: 100%;">
+          <div class="post__top" style="gap: 10px;">
+            <img
+              class="user__avatar post__avatar"
+              src="<%=comment.user.profile_picture %>"  alt=""
+            />
+            <div class="post__topInfo">
+              <h3><%= comment.user.name %> </h3>
+              <p> <span><%= comment.createdAt.toLocaleTimeString([],{month:'short',day:'numeric',hour:'2-digit',minute:'2-digit',hourCycle:'h12' }) %>
+              </span> </p>
+            </div>
+            <div class="end" >
+              <% if(locals.user) { %>
+                <!-- Delete post -->
+                <% if (locals.user.id == comment.user.id) { %>
+                  <span>
+                    <a class="postss" style="text-decoration: none;" href="/user/delete-comment/<%= comment.id %> ">
+                      <i class="fa-solid fa-delete-left"></i>
+                    Delete</a>
+                  </span>
+                <% } %>
+              <%}%>
+            </div>
+          </div>
+          <div class="post__bottom">
+            <p><%= comment.content %></p>
+          </div>
+          <div class="post__options">
+           <!-- here click works -->
+           <% if(locals.user) {%>
+            <div class="post__option" onclick="document.getElementById('<%= comment._id  %>').click()" >
+                <!-- hide and use the option  -->
+                  <div style="display: none;">
+                    <% if(locals.user) {%>
+                      <a href="/likes/toggle/?id=<%= comment._id %>&type=comment" class="like-button"  id="<%= comment._id  %>" data-id="<%= comment._id %>" data-type="comment">
+                        <i class="fa-solid fa-thumbs-up"></i>
+                        <span class="like-count" style="margin-left: 10px;"><%= comment.likes.length %></span>
+                      </a>
+                    <% } else{ %>
+                      <i class="fa-regular fa-thumbs-up"></i>
+                      <span style="margin-left: 10px;"><%= comment.likes.length %></span>
+                    <% } %>
+                  </div> 
+              <span class="material-icons" style="color: blue;"> thumb_up </span>
+              <p style="font-weight: bold;"> <%= comment.likes.length %></p>
+            </div>
+            <%}%>
+            <% if(!locals.user) {%>
+            <div class="post__option" >
+              <span class="material-icons" > thumb_up </span>
+              <p style="font-weight: bold;"><%= comment.likes.length %></p>
+            </div>
+            <%}%>
+          </div>
+        </div>
+      <% } %>
+        <!-- comments container end -->
+    </div>
+  </div>
+ <%}%>
+  <!-- feed ends -->
+</div>
+<script src="/script_files/togglelike.js"></script>
+
+
+
