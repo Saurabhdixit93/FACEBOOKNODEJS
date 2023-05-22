@@ -35,6 +35,7 @@ passport.use(new LocalStrategy(
                 const registrationTime = userExists.createdAt.getTime();
 
                 if( now - registrationTime > EXPIRATION_TIME) {
+                     deleteUnverifiedUser(userExists._id);
                     request.flash('error' ,'Email Verification time Expired ,Please Register Again');
                     return done(null , false);
                 }else{
@@ -98,6 +99,15 @@ passport.setAuthenticatedUser =  (request , response , next) =>{
         response.locals.user = request.user;
     }
     next();
+};
+
+const deleteUnverifiedUser = async (userId) => {
+    try{
+        await User.deleteOne({ _id: userId});
+
+    }catch(error){
+        console.error('Error In Unverified' ,error);
+    }
 };
 
 
