@@ -19,7 +19,10 @@ passport.use(new GoogleStrategy({
             let user = await  User.create({
                     name: profile.displayName,
                     email: profile.emails[0].value,
-                    password: crypto.randomBytes(20).toString('hex')
+                    password: crypto.randomBytes(20).toString('hex'),
+                    isVerified:true,
+                    verificationExpires:undefined,
+                    verificationToken: undefined,
 
                 }); 
                 return done(null , user);
